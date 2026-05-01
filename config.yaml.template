@@ -1,0 +1,70 @@
+# =============================================================================
+# Feedly Cyber Attacks Agent → OpenCTI Integration
+# Configuration Template
+#
+# Copy this file to config.yaml and fill in your values.
+# Priority: CLI flags > environment variables > this file
+# =============================================================================
+
+feedly:
+  # Your Feedly API key (from https://feedly.com/i/team/api)
+  # Can also be set via FEEDLY_API_KEY env var or .env file
+  api_key: "APIKEYHERE"
+
+  # Time period for fetching attack records.
+  # Choices: Last24Hours, Last7Days, Last30Days, Last3Months, Last6Months, LastYear
+  period: "Last7Days"
+
+  # --- Optional filters (leave blank to fetch all) ---
+
+  # Filter by attack type.
+  # Options: Ransomware, DataBreachesAndExfiltration, DenialOfService,
+  #          PhishingAndSocialEngineering, SupplyChainAttack, ZeroDay, APT,
+  #          Cryptojacking, Espionage, Sabotage, Wiper, BEC
+  attack_type: ""
+
+  # Filter by threat actor name or Feedly entity ID.
+  threat_actor: ""
+
+  # Filter by malware family name or Feedly entity ID.
+  malware_family: ""
+
+  # Filter by victim country (ISO 3166-1 alpha-2 code, e.g. US, GB, DE, FR).
+  victim_country: ""
+
+  # Filter by victim industry (Feedly entity ID or label).
+  # Example: "nlp/f/topic/4017" for Finance, "nlp/f/topic/3026" for Healthcare
+  victim_industry: ""
+
+  # Filter by victim continent (Feedly entity ID).
+  # Example: "nlp/f/entity/gz:loc:46" for Europe
+  #          "nlp/f/entity/gz:loc:2" for Africa
+  victim_continent: ""
+
+  # Maximum number of attack records to fetch per sync cycle.
+  max_results: 500
+
+opencti:
+  # URL of your OpenCTI instance.
+  # Can also be set via OPENCTI_URL env var or .env file
+  url: "http://localhost:8080"
+
+  # OpenCTI API token.
+  # Create a dedicated connector user in Settings → Security → Users,
+  # add them to the "Connectors" group, and paste the token here.
+  # Can also be set via OPENCTI_TOKEN env var or .env file
+  token: "OPENCTI_TOKEN_HERE"
+
+  # Create a summary threat-report in OpenCTI after each sync,
+  # linking all imported Incidents, Threat Actors, Malware, etc.
+  create_report: false
+
+sync:
+  # Run as daemon (continuous automated pulls).
+  daemon: false
+
+  # Interval between daemon sync cycles, in minutes (default: 1440 = 24 hours).
+  interval: 1440
+
+  # Path to the sync state file (tracks last sync timestamp and period).
+  state_file: "feedly_opencti_cyber_attacks_state.json"
